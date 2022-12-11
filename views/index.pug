@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    title=name()
+    meta(charset="UTF-8")
+    meta(name="description" content=desc())
+    meta(name="theme-color" content=themeColor())
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    // css
+    link(rel='stylesheet' href=webAssetPath('index.css'))
+    // scripts
+    script&attributes(scriptAttributes('index.js'))
+    // icons
+    //- link(rel="icon" href="favicon.ico?sconce" type="image/x-icon")
+    each icon in iconLinks()
+      link(rel=icon.rel sizes=icon.sizes href=icon.href)
+    // pwa
+    link(rel="manifest", href="manifest.webmanifest")
+  body
+    textarea#home
+    select
+    div.flex
+      p Drag in address to generate PDF
+    ul#envelopes
+    form
+      textarea#destination
+      button Generate
