@@ -15,17 +15,18 @@ const make = async (address) => {
   const pdfBytes = await pdfDoc.save()
   let blob = new Blob([pdfBytes], { type: 'application/pdf' })
   return URL.createObjectURL(blob)
-  // window.open(url, '_blank');
 }
 
 const generateLink = async (text) => {
   let url = await make(text.split('\n').slice(0,3).join('\n'))
+  let li = document.createElement('li')
   let anchor = document.createElement('a')
   anchor.setAttribute('href', url)
   anchor.setAttribute('target', '_blank')
   anchor.classList.add('envelope')
   anchor.textContent = text
-  document.querySelector('ul').appendChild(anchor)
+  li.appendChild(anchor)
+  document.querySelector('ul').appendChild(li)
 }
 
 window.addEventListener('dragover', (e) => {
@@ -37,7 +38,6 @@ window.addEventListener('drop', async (e) => {
   e.preventDefault()
   e.stopImmediatePropagation()
   e.stopPropagation()
-  generate(text)
   let text = e.dataTransfer.getData('text/plain')
   generateLink(text)
 })
@@ -64,11 +64,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
   if (envelopeSize) {
     document.querySelector('select').value = envelopeSize
   }
-  document.querySelector('textarea#destination')?.addEventListener('paste', (e) => {
-    let text = e.clipboardData.getData('text/plain')
-    // replace value
-    e.target.value = text
-  })
   document.querySelector('button').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()

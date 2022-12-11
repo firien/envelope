@@ -1,11 +1,15 @@
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 textarea {
+  border: 0;
   width: 100vw;
-  height: 3rem;
+  height: 4rem;
+  resize: vertical;
+  border-top: thin solid #555;
+  border-bottom: thin solid #555;
 }
 .envelope {
   max-width: 100vw;
@@ -17,4 +21,16 @@ textarea {
 textarea#destination {
   position: sticky;
   bottom: 0;
+}
+button {
+  margin: 1em;
+  width: calc(100vw - 2em);
+  padding: 1em;
+  background-color: aquamarine;
+  appearance: none;
+  --webkit-appearance: none;
+  border: none;
+}
+li {
+  padding: 0.2em 0.2em 0.2em 1em;
 }
