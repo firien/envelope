@@ -67,12 +67,32 @@ document.addEventListener('DOMContentLoaded', (e) => {
   if (envelopeSize) {
     document.querySelector('select').value = envelopeSize
   }
-  document.querySelector('button').addEventListener('click', (e) => {
+  document.querySelector('form button').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
     let text = e.target.form.querySelector('textarea').value
     if (text?.length > 0) {
       generateLink(text)
     }
+  })
+  document.querySelector('button[type=button]').addEventListener('click', async (e) => {
+    const pdfDoc = await PDFDocument.create()
+    for (let a of document.querySelectorAll('li a')) {
+      let response = await fetch(a.href)
+      let buffer = await response.arrayBuffer()
+      let doc = await PDFDocument.load(buffer)
+      let copiedPages = await pdfDoc.copyPages(doc, doc.getPageIndices())
+      for (let page of copiedPages) {
+        pdfDoc.addPage(page)
+      }
+    }
+    const pdfBytes = await pdfDoc.save()
+    let blob = new Blob([pdfBytes], { type: 'application/pdf' })
+    let url = URL.createObjectURL(blob)
+    let anchor = document.createElement('a')
+    anchor.setAttribute('href', url)
+    anchor.download = 'envelopes.pdf'
+    // anchor.setAttribute('target', '_blank')
+    anchor.click()
   })
 })
