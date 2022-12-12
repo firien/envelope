@@ -10,8 +10,11 @@ const make = async (address) => {
   let font = pdfDoc.fonts.find(f => f.name === 'Helvetica')
   let [h, w] = PageSizes[document.querySelector('select').value]
   const page = pdfDoc.addPage([w, h])
-  page.drawText(address, { x: 200, y: 170, size: 12, lineHeight: 14, font })
-  page.drawText(returnAddress, { x: 30, y: 330, size: 12, lineHeight: 14, font })
+  let fontSize = Math.ceil(h * .033)
+  page.drawText(address, { x: 0.408 * w, y: 0.479 * h, size: fontSize, lineHeight: fontSize + 2, font })
+  if (returnAddress?.length > '') {
+    page.drawText(returnAddress, { x: 0.06 * w, y: 0.931 * h, size: fontSize, lineHeight: fontSize + 2, font })
+  }
   const pdfBytes = await pdfDoc.save()
   let blob = new Blob([pdfBytes], { type: 'application/pdf' })
   return URL.createObjectURL(blob)

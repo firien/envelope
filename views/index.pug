@@ -18,11 +18,11 @@ html(lang="en")
     // pwa
     link(rel="manifest", href="manifest.webmanifest")
   body
-    textarea#home
+    textarea#home(placeholder="Return Address (Optional)")
     select
     div.flex
-      p Drag in address to generate PDF
+      p Drag in address to generate PDF, or enter Destination below and Generate
     ul#envelopes
     form
-      textarea#destination
+      textarea#destination(placeholder="Destination")
       button Generate
