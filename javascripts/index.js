@@ -70,6 +70,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
   document.querySelector('button').addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
-    generateLink(e.target.form.querySelector('textarea').value)
+    let text = e.target.form.querySelector('textarea').value
+    if (text?.length > 0) {
+      generateLink(text)
+    }
   })
 })
